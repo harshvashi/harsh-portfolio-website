@@ -17,13 +17,15 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-access-key-id: AKIA44DRHDY63NBDTF4G
+
+          aws-secret-access-key: 8Z/R2twYIz571JUo7yGLXbRdEVnWkHYgbcnMJaoT
+
           aws-region: us-east-1  # Change to your region
       
       - name: Sync files to S3
         run: |
-          aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }} \
+          aws s3 sync . s3://harsh-portfolio-website-885000707645 \
             --delete \
             --exclude ".git/*" \
             --exclude ".github/*" \
@@ -33,7 +35,7 @@ jobs:
             --exclude "*.json"
           
           # HTML files with shorter cache
-          aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }} \
+          aws s3 sync . s3://harsh-portfolio-website-885000707645 \
             --exclude "*" \
             --include "*.html" \
             --include "*.json" \
@@ -43,7 +45,7 @@ jobs:
       - name: Invalidate CloudFront Cache
         run: |
           aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --distribution-id E2CNPCSWQW530U \
             --paths "/*"
       
       - name: Deployment Success
